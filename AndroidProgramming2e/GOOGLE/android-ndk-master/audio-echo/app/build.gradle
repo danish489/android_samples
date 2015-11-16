@@ -1,0 +1,44 @@
+apply plugin: 'com.android.model.application'
+
+model {
+    android {
+        compileSdkVersion = 23
+        buildToolsVersion = "23.0.0"
+
+        defaultConfig.with {
+            applicationId="com.google.sample.echo"
+            minSdkVersion.apiLevel = 17
+            targetSdkVersion.apiLevel = 22
+            versionCode = 1
+            versionName = "1.0"
+        }
+        compileOptions.with {
+            sourceCompatibility=JavaVersion.VERSION_1_7
+            targetCompatibility=JavaVersion.VERSION_1_7
+        }
+    }
+
+    compileOptions.with {
+        sourceCompatibility=JavaVersion.VERSION_1_7
+        targetCompatibility=JavaVersion.VERSION_1_7
+    }
+
+    android.ndk {
+        moduleName = "echo"
+        cppFlags  += ["-std=c++11"]
+        ldLibs += ['android', 'log', 'OpenSLES']
+        stl     = "gnustl_static"
+    }
+    android.buildTypes {
+        release {
+            minifyEnabled=false
+            proguardFiles+=file('proguard-android.txt')
+        }
+        debug {
+            debuggable = true
+        }
+    }
+    android.productFlavors {
+        create('all')
+    }
+}
